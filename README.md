@@ -2,6 +2,12 @@
 
 Expense Tracker is a web application designed to help users manage their income and expenses. The application allows users to add, view, and delete expenses and incomes, providing a graphical representation of their financial data.
 
+## Project Partners:
+
+- [Ananda Sri Kaushal B](https://github.com/AnandaSriKaushalB)
+- [Rituarna R](https://github.com/ritzpurr)
+- [Pathik yadav](https://github.com/pathik705)
+
 ## Table of Contents
 
 - [Features](#features)
@@ -11,7 +17,6 @@ Expense Tracker is a web application designed to help users manage their income 
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -49,7 +54,7 @@ To run this project locally, follow these steps:
 ### Prerequisites
 
 - Node.js and npm installed
-- MongoDB installed and running
+- MongoDB and MongoDB compass installed and running
 
 ### Backend Setup
 
@@ -138,6 +143,3 @@ To run this project locally, follow these steps:
 
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
