@@ -25,7 +25,9 @@ const YourTransactions = () => {
 
     // Function to handle deletion of a transaction
     const handleDelete = (id) => {
-        deleteTransaction(id); // Call deleteTransaction function from global context
+        deleteTransaction(id).then(() => {
+            getTransactions(); // Refresh transactions after deletion
+        });
     };
 
     // Function to handle edit mode for a transaction
@@ -48,8 +50,10 @@ const YourTransactions = () => {
 
     // Function to handle saving edited transaction
     const handleSave = () => {
-        updateTransaction(editableTransaction._id, editedData); // Call updateTransaction function from global context
-        setEditableTransaction(null); // Clear editable transaction after saving
+        updateTransaction(editableTransaction._id, editedData).then((updatedTransaction) => {
+            getTransactions(); // Refresh transactions after updating
+            setEditableTransaction(null); // Clear editable transaction after saving
+        });
     };
 
     // Function to handle sorting transactions based on a given key and order
