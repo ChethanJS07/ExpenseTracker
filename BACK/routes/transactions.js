@@ -1,6 +1,6 @@
 const express = require('express');
-const { addExpense, getExpenses, deleteExpense } = require('../controllers/expense');
-const { addIncome, getIncomes, deleteIncome } = require('../controllers/income');
+const { addExpense, getExpenses, deleteExpense, updateExpense } = require('../controllers/expense');
+const { addIncome, getIncomes, deleteIncome, updateIncome } = require('../controllers/income');
 const { getTransactions } = require('../controllers/transactions');
 const requireAuth = require('../middleware/requireAuth');
 
@@ -14,5 +14,7 @@ router.post('/add-expense', requireAuth, addExpense);
 router.get('/get-expenses', requireAuth, getExpenses);
 router.delete('/delete-expense/:id', requireAuth, deleteExpense);
 router.get('/get-transactions', requireAuth, getTransactions); // New route to get all transactions
+router.put('/update-expense/:id', requireAuth, updateExpense); // Route for updating an expense
+router.put('/update-income/:id', requireAuth, updateIncome); // Route for updating an income
 
 module.exports = router;

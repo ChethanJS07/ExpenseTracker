@@ -57,8 +57,33 @@ exports.deleteIncome = async (req, res) => {
     const { id } = req.params;
     try {
         await IncomeSchema.findOneAndDelete({ _id: id, user_id: req.user._id });
-        await Transaction.findOneAndDelete({ _id: id, type: 'income', user_id: req.user._id });
+        await Transaction.findOneAndDelete({ originalId: id, type: 'income', user_id: req.user._id });
         res.status(200).json({ message: 'Income Deleted' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+exports.updateIncome = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount, category, description, date } = req.body;
+    const user_id = req.user._id;
+
+    try {
+        const updatedIncome = await IncomeSchema.findOneAndUpdate(
+            { _id: id, user_id },
+            { title, amount, category, description, date },
+            { new: true }
+        );
+
+        await Transaction.findOneAndUpdate(
+            { originalId: id, type: 'income', user_id },
+            { title, amount, category, description, date },
+            { new: true }
+        );
+
+        res.status(200).json(updatedIncome);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });

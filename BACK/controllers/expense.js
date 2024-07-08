@@ -1,5 +1,3 @@
-// controllers/expense.js
-
 const ExpenseSchema = require("../models/expenseModels");
 const Transaction = require("../models/transactionModels");
 
@@ -57,8 +55,33 @@ exports.deleteExpense = async (req, res) => {
     const { id } = req.params;
     try {
         await ExpenseSchema.findOneAndDelete({ _id: id, user_id: req.user._id });
-        await Transaction.findOneAndDelete({ _id: id, type: 'expense', user_id: req.user._id });
+        await Transaction.findOneAndDelete({ originalId: id, type: 'expense', user_id: req.user._id });
         res.status(200).json({ message: 'Expense Deleted' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+exports.updateExpense = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount, category, description, date } = req.body;
+    const user_id = req.user._id;
+
+    try {
+        const updatedExpense = await ExpenseSchema.findOneAndUpdate(
+            { _id: id, user_id },
+            { title, amount, category, description, date },
+            { new: true }
+        );
+
+        await Transaction.findOneAndUpdate(
+            { originalId: id, type: 'expense', user_id },
+            { title, amount, category, description, date },
+            { new: true }
+        );
+
+        res.status(200).json(updatedExpense);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
